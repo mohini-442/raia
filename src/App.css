@@ -5,9 +5,11 @@
 .ff-poppins {
   font-family: "Poppins", sans-serif;
 }
-.bg-grey{
+
+.bg-grey {
   background: linear-gradient(90deg, #B7B8C2 0%, #D4D5DC 100%);
 }
-.bg-purple{
+
+.bg-purple {
   background: linear-gradient(114.87deg, #9B93EC 0%, #7267EF 100%);
 }
