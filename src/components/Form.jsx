@@ -8,6 +8,15 @@ import whatsapp from '../assets/images/whatsapp.svg';
 import zoom from '../assets/images/zoom.svg';
 import gmail from '../assets/images/gmail.svg';
 import Popup3 from './Popup3';
+import card from '../assets/images/credit-card.png';
+import cashcard from '../assets/images/cashapp.svg';
+import klarna from '../assets/images/klarna.png';
+import afterpay from '../assets/images/afterpay.png';
+import bank from '../assets/images/bank.svg';
+import visa from '../assets/images/visa.png';
+import mastercard from '../assets/images/mastercard.png';
+import amex from '../assets/images/amex.png';
+import elo from '../assets/images/elo.png';
 
 const Form = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -21,24 +30,23 @@ const Form = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [phoneNumberError, setPhoneNumberError] = useState('');
     const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false);
-
-    const [copied, setCopied] = useState(false);
+    const [zipCode, setZipCode] = useState('');
+    const [cvc, setCvc] = useState('');
+    const [selectedCountry, setSelectedCountry] = useState('');
 
     const togglePopup = () => {
         setIsOpen(!isOpen);
     };
 
-    const handleCopy = () => {
-        const svgCode = document.getElementById('copyIcon').outerHTML;
-        navigator.clipboard
-            .writeText(svgCode)
+    const copyTextToClipboard = () => {
+        const textToCopy = "Your text to copy"; // Replace this with the text you want to copy
+        navigator.clipboard.writeText(textToCopy)
             .then(() => {
-                setCopied(true);
-                setTimeout(() => {
-                    setCopied(false);
-                }, 2000);
+                alert("Text copied to clipboard!");
             })
-            .catch((error) => console.error('Error copying SVG code: ', error));
+            .catch((error) => {
+                console.error("Unable to copy text: ", error);
+            });
     };
 
     const handleEmailChange = (event) => {
@@ -96,6 +104,54 @@ const Form = () => {
         setShowFifthPopup(true);
     };
 
+    
+    // Function to validate the CVC
+    function isValidCVC(cvc) {
+        // Check if the input consists of 3 or 4 digits
+        return /^\d{3,4}$/.test(cvc);
+    }
+
+    // Event handler for CVC input change
+    function handleCvcChange(event) {
+        const { value } = event.target;
+        setCvc(value);
+        if (isValidCVC(value)) {
+            // Valid CVC
+            // You can add visual feedback here (e.g., change border color to green)
+            console.log("Valid CVC.");
+        } else {
+            // Invalid CVC
+            // You can add visual feedback here (e.g., change border color to red)
+            console.log("Invalid CVC.");
+        }
+    }
+
+
+    function isValidZip(zip) {
+        // Check if the input consists of 5 digits
+        return /^\d{5}$/.test(zip);
+    }
+
+    // Event handler for zip code input change
+    function handleZipCodeChange(event) {
+        const { value } = event.target;
+        setZipCode(value);
+        if (isValidZip(value)) {
+            // Valid zip code
+            // You can add visual feedback here (e.g., change border color to green)
+            console.log("Valid zip code.");
+        } else {
+            // Invalid zip code
+            // You can add visual feedback here (e.g., change border color to red)
+            console.log("Invalid zip code.");
+        }
+    }
+
+    function handleCountryChange(event) {
+        setSelectedCountry(event.target.value);
+    }
+
+
 
     return (
         <>
@@ -114,7 +170,7 @@ const Form = () => {
                                 value={email}
                                 onChange={handleEmailChange}
                                 placeholder="your.email@gmail.com"
-                                className="ff-poppins text-sm sm:text-base font-normal text-[#717382] p-3 sm:p-[14px_24px_18px] outline-none rounded-[10px] w-full mt-3 sm:mt-5 border focus:border focus:border-[#7267EF80] border-[#2D2E351A]"
+                                className="ff-poppins text-sm sm:text-base font-normal text-[#717382] p-3 sm:p-[14px_24px_18px] outline-none rounded-[10px] w-full mt-3 sm:mt-5 border focus:border focus:border-[#7267EF80] focus:shadow-[0px_0px_0px_4px#7267EF1A] border-[#2D2E351A]"
                             />
                             <button
                                 type="submit"
@@ -136,32 +192,20 @@ const Form = () => {
                         <form className="border border-[#2D2E351A] p-3 xxs:p-[14px_16px_18px_24px] rounded-[10px] placeholder:text-[#2D2E35] mt-4 w-full">
                             <div className="flex">
                                 <p className="ff-poppins text-sm sm:text-base font-normal text-[#2D2E35] w-full">raia.com/bot/x123-ffa/johan</p>
-                                <span
-                                    id="copyIcon"
-                                    onClick={handleCopy}
-                                    aria-hidden="true"
-                                    focusable="false"
-                                    className={`relative before:w-[1px] before:h-[50px] xxs:before:h-[54px] before:bg-[#2D2E3514] before:absolute before:top-[-54%] before:left-[-62%] ${copied ? 'text-green-500' : 'text-gray-500'
-                                        }`}
-                                >
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M14 8H4C2.897 8 2 8.897 2 10V20C2 21.103 2.897 22 4 22H14C15.103 22 16 21.103 16 20V10C16 8.897 15.103 8 14 8Z" fill="url(#paint0_linear_17_413)" />
-                                        <path d="M20 2H10C9.46957 2 8.96086 2.21071 8.58579 2.58579C8.21071 2.96086 8 3.46957 8 4V6H16C16.5304 6 17.0391 6.21071 17.4142 6.58579C17.7893 6.96086 18 7.46957 18 8V16H20C20.5304 16 21.0391 15.7893 21.4142 15.4142C21.7893 15.0391 22 14.5304 22 14V4C22 3.46957 21.7893 2.96086 21.4142 2.58579C21.0391 2.21071 20.5304 2 20 2Z" fill="url(#paint1_linear_17_413)" />
-                                        <defs>
-                                            <linearGradient id="paint0_linear_17_413" x1="2" y1="8" x2="18.8656" y2="15.8182" gradientUnits="userSpaceOnUse">
-                                                <stop stop-color="#9B93EC" />
-                                                <stop offset="1" stop-color="#7267EF" />
-                                            </linearGradient>
-                                            <linearGradient id="paint1_linear_17_413" x1="8" y1="2" x2="24.8656" y2="9.8182" gradientUnits="userSpaceOnUse">
-                                                <stop stop-color="#9B93EC" />
-                                                <stop offset="1" stop-color="#7267EF" />
-                                            </linearGradient>
-                                        </defs>
-                                    </svg>
-                                    <span id="textToCopy" className="hidden">
-                                        Text to be copied
-                                    </span>
-                                </span>
+                                <button className='relative before:w-[1px] before:h-[50px] xxs:before:h-[54px] before:bg-[#2D2E3514] before:absolute before:top-[-54%] before:left-[-62%]' onClick={copyTextToClipboard}> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14 8H4C2.897 8 2 8.897 2 10V20C2 21.103 2.897 22 4 22H14C15.103 22 16 21.103 16 20V10C16 8.897 15.103 8 14 8Z" fill="url(#paint0_linear_17_413)" />
+                                    <path d="M20 2H10C9.46957 2 8.96086 2.21071 8.58579 2.58579C8.21071 2.96086 8 3.46957 8 4V6H16C16.5304 6 17.0391 6.21071 17.4142 6.58579C17.7893 6.96086 18 7.46957 18 8V16H20C20.5304 16 21.0391 15.7893 21.4142 15.4142C21.7893 15.0391 22 14.5304 22 14V4C22 3.46957 21.7893 2.96086 21.4142 2.58579C21.0391 2.21071 20.5304 2 20 2Z" fill="url(#paint1_linear_17_413)" />
+                                    <defs>
+                                        <linearGradient id="paint0_linear_17_413" x1="2" y1="8" x2="18.8656" y2="15.8182" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#9B93EC" />
+                                            <stop offset="1" stop-color="#7267EF" />
+                                        </linearGradient>
+                                        <linearGradient id="paint1_linear_17_413" x1="8" y1="2" x2="24.8656" y2="9.8182" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#9B93EC" />
+                                            <stop offset="1" stop-color="#7267EF" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg></button>
                             </div>
                         </form>
 
@@ -282,7 +326,7 @@ const Form = () => {
 
                 {showFourthPopup && (
                     <Popup2 isOpen={isOpen} onClose={togglePopup}>
-                        <div className='flex justify-center flex-col'>
+                        <div className='flex justify-center flex-col pt-2 xxs:pt-0'>
                             <span className='mx-auto'><svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="28" cy="28" r="28" fill="white" />
                                 <circle cx="28" cy="28" r="27.5" stroke="#2D2E35" stroke-opacity="0.1" />
@@ -291,15 +335,79 @@ const Form = () => {
                                 <path d="M19 27H22C22.8 27 23.6 27.3 24.1 27.9L25.2 28.8C26.8 30.4 29.3 30.4 30.9 28.8L32 27.9C32.5 27.4 33.3 27 34.1 27H37" stroke="#7267EF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                             </span>
-                            <h2 className='ff-poppins font-medium text-[21px] pt-4 text-[#2D2E35] text-center'>Start Your Trial</h2>
+                            <h2 className='ff-poppins font-medium text-[21px] pt-2 xxs:pt-4 text-[#2D2E35] text-center'>Start Your Trial</h2>
                             <p className='ff-poppins text-sm pt-1 font-normal text-[#717382] leading-[22px]  text-center'>Enter your credit card to start your trial today. After 7 days you will be charged $39.99/mo until you cancel.</p>
+
+                            <div className='flex justify-center xxs:justify-start gap-1 pt-5'>
+                                <div className='w-14 xxs:w-[77px] h-[58px] py-1 px-2 border-2 rounded-[5px]'>
+                                    <img src={card} alt="card" className='w-[18px] h-5' />
+                                    <p className='ff-poppins text-[#2E68D5] text-[10px] font-medium'>Card</p>
+                                </div>
+                                <div className='w-[70px] xxs:w-[77px] h-[58px] py-1 px-2 border-2 rounded-[5px]'>
+                                    <img src={cashcard} alt="cashcard" className='w-[18px] h-5' />
+                                    <p className='ff-poppins text-[#72737b] text-[10px] font-medium leading-[9px] pt-[1px]'>Cash App <br />Pay</p>
+                                </div>
+                                <div className='w-16 xxs:w-[77px] h-[58px] py-1 px-2 border-2 rounded-[5px]'>
+                                    <img src={klarna} alt="klarna" className='w-[18px] h-5' />
+                                    <p className='ff-poppins text-[#72737b] text-[10px] font-medium leading-[9px] pt-[3px]'>Klarna</p>
+                                </div>
+                                <div className='w-16 xxs:w-[77px] h-[58px] py-1 px-2 border-2 rounded-[5px]'>
+                                    <img src={afterpay} alt="afterpay" className='w-[18px] h-5' />
+                                    <p className='ff-poppins text-[#72737b] text-[10px] font-medium leading-[9px] pt-[3px]'>Afterpay</p>
+                                </div>
+                                <div className='w-8 xxs:w-[29px] h-[58px] p-1 border-2 rounded-[5px]'>
+                                    <img src={bank} alt="bank" className='w-[24px] h-6' />
+                                </div>
+                            </div>
 
                             <form>
                                 <div className=''>
-                                    <label htmlFor="" className='ff-poppins font-normal text-[10px] text-[#717382]'>Card number</label>
-                                    <input type="text" placeholder='' />
+                                    <label For="cardnumber" className='ff-poppins font-medium text-[11px] text-[#717382]'>Card number</label>
+                                    <div className='w-full border p-1 xxs:p-2 rounded-md flex justify-between'>
+                                        <input required type="text" id='cardnumber' placeholder='1234 1234 1234 1234' className='text-[12px] xxs:text-[16px] outline-none ff-poppins' />
+                                        <div className='flex items-center'>
+                                            <img src={visa} alt="visa" className='w-8 h-8' />
+                                            <img src={mastercard} alt="mastercard" className='w-8 h-8' />
+                                            <img src={amex} alt="mastercard" className='w-8 h-8' />
+                                            <img src={elo} alt="mastercard" className='w-6 h-5' />
+                                        </div>
+                                    </div>
 
                                 </div>
+                                <div className='flex gap-1'>
+                                    <div className='flex flex-col pt-2 w-1/2'>
+                                        <label For="expiration" className='ff-poppins font-medium text-[11px] text-[#717382]'>Expiration</label>
+                                        <input type="text" id='expiration' placeholder='MM/YY' className='text-[12px] xxs:text-[16px] border p-2 rounded-md outline-none ff-poppins' />
+                                    </div>
+                                    <div className='flex flex-col pt-2 w-1/2'>
+                                        <label for="cvc" className='ff-poppins font-medium text-[11px] text-[#717382]'>CVC</label>
+                                        <input type="text" id='cvc' 
+                                            value={cvc}
+                                            onChange={handleCvcChange} placeholder='CVC' maxlength="4" className='text-[12px] xxs:text-[16px] border p-2 rounded-md outline-none ff-poppins' />
+                                    </div>
+                                </div>
+                                <div className='flex gap-1'>
+                                    <div className='flex flex-col pt-2 w-1/2'>
+                                        <label htmlFor="country" className='ff-poppins font-medium text-[11px] text-[#717382]' >Country</label>
+                                        <select id="country" value={selectedCountry} className=' border p-2 rounded-md outline-none ' onChange={handleCountryChange}>
+                                            <option value="" className='ff-poppins text-[12px] xxs:text-[16px]'>United States</option>
+                                            <option value="US">United States</option>
+                                            <option value="CA">Canada</option>
+                                            <option value="UK">United Kingdom</option>
+                                            <option value="JP">Japan</option>
+                                           
+                                        </select>
+                                        {selectedCountry && <p>Selected country: {selectedCountry}</p>}
+                                    </div>
+                                    <div className='flex flex-col pt-2 w-1/2'>
+                                        <label for="zip" className='ff-poppins font-medium text-[11px] text-[#717382]'>ZIP</label>
+                                        <input type="text" id='zip' value={zipCode}
+                                            onChange={handleZipCodeChange} placeholder='12345' className='text-[12px] xxs:text-[16px] border p-2 rounded-md outline-none ff-poppins' />
+                                    </div>
+                                </div>
+                                <button className='ff-poppins font-medium text-base text-white bg-purple p-[14px] w-full mt-6 rounded-[10px] hover:opacity-90 duration-300'>Pay $39.99 & Start Trial</button>
+
+
                             </form>
                         </div>
                     </Popup2>
@@ -316,7 +424,7 @@ const Form = () => {
                                 value={phoneNumber}
                                 onChange={handlePhoneNumberChange}
                                 placeholder="Your phone number"
-                                className="ff-poppins text-sm xxs:text-base font-normal text-[#717382] p-3 xxs:p-[14px_24px_18px] outline-none rounded-[10px] w-full mt-4 xxs:mt-5 border focus:border focus:border-[#7267EF80] border-[#2D2E351A]"
+                                className="ff-poppins text-sm xxs:text-base font-normal text-[#717382] focus:shadow-[0px_0px_0px_4px#7267EF1A] p-3 xxs:p-[14px_24px_18px] outline-none rounded-[10px] w-full mt-4 xxs:mt-5 border focus:border focus:border-[#7267EF80] border-[#2D2E351A]"
                             />
                             {phoneNumberError && (
                                 <p style={{ color: 'red' }}>{phoneNumberError}</p>
