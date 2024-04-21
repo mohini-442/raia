@@ -5,7 +5,7 @@ const Popup3 = ({ isOpen, onClose, children }) => {
         <>
             {isOpen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50">
-                    <div className="fixed inset-0 bg-gray-800 opacity-50"></div>
+                    <div className="fixed inset-0 bg-gray-800 opacity-50" onClick={onClose}></div>
                     <div className="relative bg-white w-[400px] xxs:h-[344px] mx-5 rounded-[20px] p-[20px_24px_24px] border border-[#2D2E3514] z-50">
                         {/* Close button */}
                         <button

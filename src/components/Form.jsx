@@ -39,10 +39,14 @@ const Form = () => {
     };
 
     const copyTextToClipboard = () => {
-        const textToCopy = "Your text to copy"; // Replace this with the text you want to copy
+        const textToCopy = "raia.com/bot/x123-ffa/johan";
         navigator.clipboard.writeText(textToCopy)
             .then(() => {
-                alert("Text copied to clipboard!");
+                // alert("Text copied to clipboard!");
+                const messageSpan = document.getElementById('copyMessage');
+
+                // Update the text content of the span element
+                messageSpan.textContent = "Text copied to clipboard!";
             })
             .catch((error) => {
                 console.error("Unable to copy text: ", error);
@@ -74,7 +78,6 @@ const Form = () => {
         // Handle submission of the fifth form if needed
     };
 
-
     const handleSubmitFirstPopup = (event) => {
         event.preventDefault();
         console.log('First form submitted with email:', email);
@@ -104,7 +107,6 @@ const Form = () => {
         setShowFifthPopup(true);
     };
 
-    
     // Function to validate the CVC
     function isValidCVC(cvc) {
         // Check if the input consists of 3 or 4 digits
@@ -125,7 +127,6 @@ const Form = () => {
             console.log("Invalid CVC.");
         }
     }
-
 
     function isValidZip(zip) {
         // Check if the input consists of 5 digits
@@ -150,8 +151,6 @@ const Form = () => {
     function handleCountryChange(event) {
         setSelectedCountry(event.target.value);
     }
-
-
 
     return (
         <>
@@ -192,22 +191,25 @@ const Form = () => {
                         <form className="border border-[#2D2E351A] p-3 xxs:p-[14px_16px_18px_24px] rounded-[10px] placeholder:text-[#2D2E35] mt-4 w-full">
                             <div className="flex">
                                 <p className="ff-poppins text-sm sm:text-base font-normal text-[#2D2E35] w-full">raia.com/bot/x123-ffa/johan</p>
-                                <button className='relative before:w-[1px] before:h-[50px] xxs:before:h-[54px] before:bg-[#2D2E3514] before:absolute before:top-[-54%] before:left-[-62%]' onClick={copyTextToClipboard}> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M14 8H4C2.897 8 2 8.897 2 10V20C2 21.103 2.897 22 4 22H14C15.103 22 16 21.103 16 20V10C16 8.897 15.103 8 14 8Z" fill="url(#paint0_linear_17_413)" />
-                                    <path d="M20 2H10C9.46957 2 8.96086 2.21071 8.58579 2.58579C8.21071 2.96086 8 3.46957 8 4V6H16C16.5304 6 17.0391 6.21071 17.4142 6.58579C17.7893 6.96086 18 7.46957 18 8V16H20C20.5304 16 21.0391 15.7893 21.4142 15.4142C21.7893 15.0391 22 14.5304 22 14V4C22 3.46957 21.7893 2.96086 21.4142 2.58579C21.0391 2.21071 20.5304 2 20 2Z" fill="url(#paint1_linear_17_413)" />
-                                    <defs>
-                                        <linearGradient id="paint0_linear_17_413" x1="2" y1="8" x2="18.8656" y2="15.8182" gradientUnits="userSpaceOnUse">
-                                            <stop stop-color="#9B93EC" />
-                                            <stop offset="1" stop-color="#7267EF" />
-                                        </linearGradient>
-                                        <linearGradient id="paint1_linear_17_413" x1="8" y1="2" x2="24.8656" y2="9.8182" gradientUnits="userSpaceOnUse">
-                                            <stop stop-color="#9B93EC" />
-                                            <stop offset="1" stop-color="#7267EF" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg></button>
+                                <button className='relative before:w-[1px] before:h-[50px] xxs:before:h-[54px] before:bg-[#2D2E3514] before:absolute before:top-[-54%] before:left-[-62%]' onClick={copyTextToClipboard}>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M14 8H4C2.897 8 2 8.897 2 10V20C2 21.103 2.897 22 4 22H14C15.103 22 16 21.103 16 20V10C16 8.897 15.103 8 14 8Z" fill="url(#paint0_linear_17_413)" />
+                                        <path d="M20 2H10C9.46957 2 8.96086 2.21071 8.58579 2.58579C8.21071 2.96086 8 3.46957 8 4V6H16C16.5304 6 17.0391 6.21071 17.4142 6.58579C17.7893 6.96086 18 7.46957 18 8V16H20C20.5304 16 21.0391 15.7893 21.4142 15.4142C21.7893 15.0391 22 14.5304 22 14V4C22 3.46957 21.7893 2.96086 21.4142 2.58579C21.0391 2.21071 20.5304 2 20 2Z" fill="url(#paint1_linear_17_413)" />
+                                        <defs>
+                                            <linearGradient id="paint0_linear_17_413" x1="2" y1="8" x2="18.8656" y2="15.8182" gradientUnits="userSpaceOnUse">
+                                                <stop stop-color="#9B93EC" />
+                                                <stop offset="1" stop-color="#7267EF" />
+                                            </linearGradient>
+                                            <linearGradient id="paint1_linear_17_413" x1="8" y1="2" x2="24.8656" y2="9.8182" gradientUnits="userSpaceOnUse">
+                                                <stop stop-color="#9B93EC" />
+                                                <stop offset="1" stop-color="#7267EF" />
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                </button>
                             </div>
                         </form>
+                        <p id="copyMessage" className='text-red-500'></p>
 
                         <div className="flex items-center gap-2 pt-3 w-full">
                             <div className="bg-[#2D2E3514] h-[1px] w-1/2 xxs:w-[159px]"></div>
@@ -381,9 +383,9 @@ const Form = () => {
                                     </div>
                                     <div className='flex flex-col pt-2 w-1/2'>
                                         <label for="cvc" className='ff-poppins font-medium text-[11px] text-[#717382]'>CVC</label>
-                                        <input type="text" id='cvc' 
+                                        <input type="text" id='cvc'
                                             value={cvc}
-                                            onChange={handleCvcChange} placeholder='CVC' maxlength="4" className='text-[12px] xxs:text-[16px] border p-2 rounded-md outline-none ff-poppins' />
+                                            onChange={handleCvcChange} placeholder='CVC' maxlength="3" className='text-[12px] xxs:text-[16px] border p-2 rounded-md outline-none ff-poppins' />
                                     </div>
                                 </div>
                                 <div className='flex gap-1'>
@@ -395,14 +397,13 @@ const Form = () => {
                                             <option value="CA">Canada</option>
                                             <option value="UK">United Kingdom</option>
                                             <option value="JP">Japan</option>
-                                           
+
                                         </select>
-                                        {selectedCountry && <p>Selected country: {selectedCountry}</p>}
                                     </div>
                                     <div className='flex flex-col pt-2 w-1/2'>
                                         <label for="zip" className='ff-poppins font-medium text-[11px] text-[#717382]'>ZIP</label>
                                         <input type="text" id='zip' value={zipCode}
-                                            onChange={handleZipCodeChange} placeholder='12345' className='text-[12px] xxs:text-[16px] border p-2 rounded-md outline-none ff-poppins' />
+                                            onChange={handleZipCodeChange} maxlength="5" placeholder='12345' className='text-[12px] xxs:text-[16px] border p-2 rounded-md outline-none ff-poppins' />
                                     </div>
                                 </div>
                                 <button className='ff-poppins font-medium text-base text-white bg-purple p-[14px] w-full mt-6 rounded-[10px] hover:opacity-90 duration-300'>Pay $39.99 & Start Trial</button>
